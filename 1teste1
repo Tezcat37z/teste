@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html> <!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>  <!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>
+fff<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZeroCoeApp — Ton app en 7 jours</title>
+  <meta name="description" content="Ton app en 7 jours. Sans code. 2 000€. 97€/mois." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#00AEEF" />
+  <link rel="icon" href="/assets/logo.svg" />
+  <style>
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .hero{margin:40px 0}
+    .btn{background:#00AEEF;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none}
+    .langs button{margin-left:8px}
+    footer{margin-top:60px;font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/assets/logo.svg" alt="ZeroCoeApp" width="140" />
+      <div class="langs">
+        <small>Lang:</small>
+        <button data-locale="fr">FR</button>
+        <button data-locale="en">EN</button>
+        <button data-locale="es">ES</button>
+        <button data-locale="de">DE</button>
+        <button data-locale="nl">NL</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 id="hero-title">Ton app en 7 jours. Sans code. 2 000€. 97€/mois.</h1>
+        <p id="hero-sub">Demo disponible via QR.</p>
+        <p>
+          <a id="cta" class="btn" href="https://demo.zerocodeapps.com" target="_blank" rel="noopener">Voir la démo</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 id="process-title">Process</h2>
+        <ul id="process">
+          <li>Call 15 min → création 7 j → test 3 j → signature HelloSign → paiement Stripe → livraison</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>ZeroCoeApp · Multilingue · PWA demo</small>
+    </footer>
+  </div>
+
+  <script>
+    const locales = {};
+    async function loadLocale(code){
+      if(locales[code]) return locales[code];
+      const res = await fetch('/locales/' + code + '.json');
+      const data = await res.json();
+      locales[code] = data;
+      return data;
+    }
+    function applyLocale(data){
+      document.documentElement.lang = data.lang || 'fr';
+      document.getElementById('hero-title').textContent = data.hero;
+      document.getElementById('hero-sub').textContent = data.demo;
+      document.getElementById('process-title').textContent = data.processTitle;
+      document.getElementById('cta').textContent = data.cta;
+    }
+    document.querySelectorAll('.langs button').forEach(btn=>{
+      btn.addEventListener('click', async ()=> {
+        const code = btn.getAttribute('data-locale');
+        const l = await loadLocale(code);
+        applyLocale(l);
+      });
+    });
+    // load default FR
+    loadLocale('fr').then(applyLocale);
+
+    // register service worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>
